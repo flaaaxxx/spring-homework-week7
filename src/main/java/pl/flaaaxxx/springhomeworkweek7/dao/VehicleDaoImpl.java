@@ -69,7 +69,7 @@ public class VehicleDaoImpl implements VehicleDao {
                 resultSet.getString("mark"),
                 resultSet.getString("model"),
                 resultSet.getString("color"),
-                resultSet.getDate("productionDate")
+                resultSet.getTimestamp("productionDate")
         ), id);
     }
 
