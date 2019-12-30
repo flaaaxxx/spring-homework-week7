@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="shared/header :: links">
+    <title>News</title>
+</head>
+
+<body>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xl-6" style="padding-top: 20px;">
+            <a th:href="@{/add-vehicle}" class="btn btn-warning btn-raised">Add vehicle</a>
+            <a th:href="@{/show}" class="btn btn-warning btn-raised">Show vehicles</a>
+            <a th:href="@{/articles}" class="btn btn-warning btn-raised">Show news</a>
+        </div>
+    </div>
+
+    <span th:if="${newsList.isEmpty()}"><p>Brak danych</p></span>
+    <span th:unless="${newsList.isEmpty()}">
+        <div class="row">
+            <div class="table-responsive col-xl-12" id="idVehicle">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="bg-warning">
+                            <th scope="col" style="color: white; font-size: 20px;">Offline/Online</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Image</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Article</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Title</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Author</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Link</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Modification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="article : ${newsList}">
+                            <span th:if="${article.id} == 0">
+                                <td class="onlineTd">Online</td>
+                            </span>
+                            <span th:unless="${article.id} == 0">
+                                <td class="offlineTd">Offline</td>
+                            </span>
+                            <td> <img th:src="${article.urlToImage}" width="193" height="130" alt=""/></td>
+                            <td th:text="${article.content}"></td>
+                            <td th:text="${article.title}"></td>
+                            <td th:text="${article.author}"></td>
+                            <td><a th:href="${article.url}">Source</a></td>
+                            <td>
+                                <span th:if="${article.id == 0}">
+                                    <form th:action="@{/save-article/__${newsList.indexOf(article)}__}" method="POST"
+                                          class="modArtForm">
+                                        <input type="submit" class="form-control btn btn-warning btn-raised"
+                                               value="Save"/>
+                                    </form>
+                                </span>
+                                <span th:unless="${article.id == 0}">
+                                    <form th:action="@{/edit-article/__${article.id}__}" method="POST"
+                                          class="modArtForm">
+                                        <input type="submit" class="form-control btn btn-warning btn-raised"
+                                               value="Edit"/>
+                                    </form>
+                                    <form th:action="@{/delete-article/__${article.id}__}" method="POST"
+                                          class="modArtForm">
+                                        <input type="submit" class="form-control btn btn-danger btn-raised"
+                                               value="Delete"/>
+                                    </form>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </span>
+    </span>
+</div>
+</body>
+</html>

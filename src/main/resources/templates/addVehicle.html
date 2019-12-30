@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="shared/header :: links">
+    <title>Add vehicle</title>
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="row">
+
+        <form th:action="@{/add-execute}" method="POST" th:object="${vehicle}" class="col-xl-4">
+
+            <input type="hidden" id="id" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label for="mark" class="bmd-label-floating">Mark</label>
+                <input type="text" class="form-control" id="mark" th:field="*{mark}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="model" class="bmd-label-floating">Model</label>
+                <input type="text" class="form-control" id="model" th:field="*{model}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="color" class="bmd-label-floating">Color</label>
+                <input type="text" class="form-control" id="color" th:field="*{color}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="date" class="bmd-label-floating">Production date</label>
+                <input type="date" class="form-control" id="date" th:field="*{productionDate}" required/>
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-raised">Save changes</button>
+            <a th:href="@{/show}" class="btn btn-warning btn-raised">Show vehicles</a>
+            <a th:href="@{/articles}" class="btn btn-warning btn-raised">Show news</a>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

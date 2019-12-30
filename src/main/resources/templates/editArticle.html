@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="shared/header :: links">
+    <title>Add news</title>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+
+        <form th:action="@{/edit-article-execute}" method="POST" th:object="${article}" class="col-xl-4">
+
+            <input type="hidden" class="form-control" id="id" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label for="title" class="bmd-label-floating">Title</label>
+                <input type="text" class="form-control" id="title" th:field="*{title}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="author" class="bmd-label-floating">Author</label>
+                <input type="text" class="form-control" id="author" th:field="*{author}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="content" class="bmd-label-floating">Content</label>
+                <textarea rows="4" cols="50" class="form-control" id="content" th:field="*{content}"
+                          required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="url" class="bmd-label-floating">Source</label>
+                <input type="text" class="form-control" id="url" th:field="*{url}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="urlToImage" class="bmd-label-floating">Url to image</label>
+                <input type="text" class="form-control" id="urlToImage" th:field="*{urlToImage}" required/>
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-raised">Save changes</button>
+            <a th:href="@{/articles}" class="btn btn-warning btn-raised">Show news</a>
+            <a th:href="@{/show}" class="btn btn-warning btn-raised">Show vehicles</a>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

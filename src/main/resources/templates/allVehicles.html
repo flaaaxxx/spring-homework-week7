@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="shared/header :: links">
+    <title>Vehicles</title>
+</head>
+
+<body>
+<div class="container-fluid">
+
+    <span th:if="${vehicleList.isEmpty()}"><p>Brak danych</p></span>
+    <span th:unless="${vehicleList.isEmpty()}">
+        <div class="row">
+            <div class="table-responsive col-xl-6" id="idVehicle">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="bg-warning">
+                            <th scope="col" style="color: white; font-size: 20px;">id</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Mark</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Model</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Color</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Data</th>
+                            <th scope="col" style="color: white; font-size: 20px;">Modification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="vehicle : ${vehicleList}">
+                            <span th:if="${vehicle.id >= 0}">
+                                <td th:text="${vehicle.id}"></td>
+                                <td th:text="${vehicle.mark}"></td>
+                                <td th:text="${vehicle.model}"></td>
+                                <td th:text="${vehicle.color}"></td>
+                                <td th:text="${#dates.format(vehicle.productionDate, 'dd/MM/yyyy')}"></td>
+                                <td>
+                                    <form th:action="@{delete-vehicle/__${vehicle.id}__}" method="POST" class="modForm">
+                                        <input type="submit" class="form-control btn btn-danger btn-raised" value="Usuń"
+                                               id="deleteInput"/>
+                                    </form>
+                                    <form th:action="@{edit-vehicle/__${vehicle.id}__}" method="POST" class="modForm">
+                                        <input type="submit" class="form-control btn btn-warning btn-raised"
+                                               value="Edit" id="updateInput"/>
+                                    </form>
+                                </td>
+                            </span>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <form th:action="@{/search-vehicles}" method="POST" class="col-xl-4 rounded" id="searchForm">
+                <div class="form-group">
+                    <label for="startDate" class="bmd-label-floating">Od</label>
+                    <input type="date" class="form-control searchInput" id="startDate" name="startDate" required/>
+                </div>
+                <div class="form-group">
+                    <label for="endDate" class="bmd-label-floating">Do</label>
+                    <input type="date" class="form-control searchInput" id="endDate" name="endDate" required/>
+                </div>
+                <input type="submit" class="form-control btn btn-warning btn-raised"
+                       value="Search" id="searchInputId"/>
+            </form>
+        </div>
+    </span>
+    </span>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <span><a th:href="@{/add-vehicle}" class="btn btn-warning btn-raised">Add vehicle</a></span>
+            <span><a th:href="@{/show}" class="btn btn-warning btn-raised">Show vehicles</a></span>
+            <span><a th:href="@{/articles}" class="btn btn-warning btn-raised">Show news</a></span>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
